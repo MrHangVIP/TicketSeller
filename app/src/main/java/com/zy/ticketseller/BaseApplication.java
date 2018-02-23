@@ -2,11 +2,8 @@ package com.zy.ticketseller;
 
 import android.app.Application;
 
-import com.jyz.handquestionnaire.bean.UserItem;
-import com.jyz.handquestionnaire.util.SpfUtil;
-import com.umeng.socialize.Config;
-import com.umeng.socialize.PlatformConfig;
-import com.umeng.socialize.UMShareAPI;
+import com.zy.ticketseller.util.SpfUtil;
+
 
 /**
  * Created by Songzhihang on 2017/10/5.
@@ -19,7 +16,7 @@ public class BaseApplication extends Application {
         return instance;
     }
 
-    private UserItem mUser;
+//    private UserItem mUser;
 //
 //    private static List<EmojiItem> emojiItemList=new ArrayList<>();
 //
@@ -36,15 +33,15 @@ public class BaseApplication extends Application {
         instance = this;
         //初始化缓存
         SpfUtil.init(this);
-        Config.DEBUG = true;
-        UMShareAPI.get(this);
+//        Config.DEBUG = true;
+//        UMShareAPI.get(this);
     }
 
-    public UserItem getmUser() {
-        return mUser;
-    }
-
-    public void setmUser(UserItem mUser) {
-        this.mUser = mUser;
-    }
+//    public UserItem getmUser() {
+//        return mUser;
+//    }
+//
+//    public void setmUser(UserItem mUser) {
+//        this.mUser = mUser;
+//    }
 }
