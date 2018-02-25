@@ -14,7 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.zy.ticketseller.BaseApplication;
-import com.zy.ticketseller.listener.listener.ResponseListener;
+import com.zy.ticketseller.listener.ResponseListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
