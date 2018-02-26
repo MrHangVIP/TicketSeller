@@ -133,7 +133,7 @@ public class RecyclerViewLayout extends RelativeLayout implements RecyclerListen
         addView(empty_layout, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         addView(loading_layout, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         addView(failure_layout, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        empty_tip = MyUtil.getString(R.string.no_data);
+        empty_tip =context.getResources().getString(R.string.no_data);
         showLoading();
         setListener();
     }
@@ -146,7 +146,7 @@ public class RecyclerViewLayout extends RelativeLayout implements RecyclerListen
                 MyUtil.setVisibility(failure_layout, View.GONE);
                 MyUtil.setVisibility(xRefreshRecycleView, View.GONE);
                 MyUtil.setVisibility(loading_layout, View.VISIBLE);
-                MyUtil.getHandler(context).postDelayed(new Runnable() {
+               postDelayed(new Runnable() {
                     public void run() {
                         showLoading();
                         onRefresh();
@@ -214,7 +214,7 @@ public class RecyclerViewLayout extends RelativeLayout implements RecyclerListen
     @Override
     public void showEmpty() {
         stopRefresh();
-        MyUtil.setText(empty_layout_text, empty_tip);
+        empty_layout_text.setText(empty_tip);
         MyUtil.setVisibility(empty_layout, VISIBLE);
         MyUtil.setVisibility(loading_layout, GONE);
         MyUtil.setVisibility(failure_layout, View.GONE);
