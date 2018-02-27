@@ -4,7 +4,6 @@ import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -142,7 +141,7 @@ public class XRefreshViewExtendHeader extends LinearLayout implements IHeaderCal
         if (getMeasuredHeight() < 5) {
             return;
         }
-        MyUtil.getHandler(mContext).postDelayed(new Runnable() {
+        postDelayed(new Runnable() {
             @Override
             public void run() {
                 finishAnimation(totalHeight);
@@ -181,7 +180,7 @@ public class XRefreshViewExtendHeader extends LinearLayout implements IHeaderCal
         }
         switch (mState) {
             case STATE_REFRESHING:
-                mArrowImageView.setX(Constant. getScreenWidth(mContext)/ 2 - MyUtil.toDip(10));
+                mArrowImageView.setX(Constant.getScreenWidth(mContext) / 2 - MyUtil.toDip(10));
                 mArrowImageView.setY(MyUtil.toDip(10));
                 break;
             case STATE_READY:
@@ -190,7 +189,7 @@ public class XRefreshViewExtendHeader extends LinearLayout implements IHeaderCal
                 float y_pos = totalHeight - offsetY + MyUtil.toDip(10);
                 mArrowImageView.setY(y_pos < 0 ? totalHeight : y_pos);
                 float groupY = group - totalHeight + offsetY;
-                double x = Constant. getScreenWidth(mContext)/ 2  / 2 - Math.sqrt((group * group) - (groupY * groupY));
+                double x = Constant.getScreenWidth(mContext) / 2 / 2 - Math.sqrt((group * group) - (groupY * groupY));
                 mArrowImageView.setX((float) x - MyUtil.toDip(10));
                 break;
         }
@@ -226,7 +225,7 @@ public class XRefreshViewExtendHeader extends LinearLayout implements IHeaderCal
         ObjectAnimator yxBouncer = ObjectAnimator.ofPropertyValuesHolder(mArrowImageView, pvhY, pvhX).setDuration(800);
         yxBouncer.setInterpolator(new BounceInterpolator());
         yxBouncer.start();
-        MyUtil.getHandler(mContext).postDelayed(new Runnable() {
+        postDelayed(new Runnable() {
             @Override
             public void run() {
                 //复位

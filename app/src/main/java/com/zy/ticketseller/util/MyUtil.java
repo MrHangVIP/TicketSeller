@@ -1,10 +1,12 @@
 
 package com.zy.ticketseller.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Base64;
@@ -334,5 +336,25 @@ public final class MyUtil {
 				break;
 
 		}
+	}
+
+	/**
+	 * 判断Activity是否finish
+	 *
+	 * @param mContext
+	 * @return
+	 */
+	public static boolean isActivityRun(Context mContext) {
+		if (mContext == null)
+			return true;
+		boolean isFinishing = false;
+		if (mContext instanceof Activity) {
+			if (Build.VERSION.SDK_INT < 17) {
+				isFinishing = ((Activity) mContext).isFinishing();
+			} else {
+				isFinishing = ((Activity) mContext).isDestroyed();
+			}
+		}
+		return isFinishing;
 	}
 }

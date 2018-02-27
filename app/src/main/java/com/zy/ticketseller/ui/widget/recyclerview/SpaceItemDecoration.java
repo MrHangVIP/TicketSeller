@@ -4,7 +4,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.hoge.android.factory.util.Util;
 import com.zy.ticketseller.util.MyUtil;
 
 /**

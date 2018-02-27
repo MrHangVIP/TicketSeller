@@ -5,15 +5,22 @@
     android:orientation="vertical">
 
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/fcl_sr_swiperefresh"
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+    <!--android:id="@+id/fcl_sr_swiperefresh"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<android.support.v7.widget.RecyclerView-->
+    <!--android:id="@+id/fcl_rv_recycleview"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+    <com.zy.ticketseller.ui.widget.recyclerview.RecyclerViewLayout
+        android:id="@+id/fcl_rv_recycleview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fcl_rv_recycleview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.zy.ticketseller.ui.widget.recyclerview.RecyclerViewLayout>
 
 </LinearLayout>

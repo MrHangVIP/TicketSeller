@@ -47,3 +47,4 @@ public class XRefreshRecycleView extends XRefreshView {
     public RecyclerView getRecyclerview() {
         return recyclerview;
     }
+}

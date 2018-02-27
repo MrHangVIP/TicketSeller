@@ -7,14 +7,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hoge.android.factory.base.BaseApplication;
-import com.hoge.android.factory.listeners.OnClickEffectiveListener;
-import com.hoge.android.factory.util.Util;
-import com.hoge.android.factory.util.ui.ImageLoaderUtil;
-import com.hoge.android.factory.util.ui.ThemeUtil;
-import com.makeramen.roundedimageview.RoundedImageView;
-
-import java.util.HashMap;
+import com.bumptech.glide.Glide;
+import com.zy.ticketseller.R;
+import com.zy.ticketseller.ui.widget.roundedimageview.RoundedImageView;
+import com.zy.ticketseller.util.ImageLoaderUtil;
+import com.zy.ticketseller.util.MyUtil;
 
 /**
  * RecyclerView 的 ViewHolder
@@ -76,7 +73,7 @@ public class RVBaseViewHolder extends RecyclerView.ViewHolder {
      * @return 默认图为 loading_50
      */
     public RVBaseViewHolder setImageView(int id, String url, int width, int height) {
-        return setImageView(id, url, width, height, ImageLoaderUtil.loading_50);
+        return setImageView(id, url, width, height, R.drawable.app_logo);
     }
 
     /**
@@ -108,27 +105,27 @@ public class RVBaseViewHolder extends RecyclerView.ViewHolder {
      */
     public RVBaseViewHolder setImageView(int id, String url, int urlWidth,
                                          int urlHeight, int showWidth, int showHeight, int default_pic) {
-        if (itemView == null) {
-            return this;
-        }
-        ImageView imageView = retrieveView(id);
-        if (null == imageView) {
-            return this;
-        }
-        if (0 == default_pic) {
-            default_pic = ImageLoaderUtil.loading_400;
-        }
-        if (Util.isEmpty(url) || Util.isActivityRun(itemView.getContext())) {
-            ThemeUtil.setImageResource(itemView.getContext(), imageView, default_pic);
-            return this;
-        }
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put(ImageLoaderUtil.IMAGE_URL, url);
-        map.put(ImageLoaderUtil.PLEASE_HOLDER, default_pic);
-        map.put(ImageLoaderUtil.ORIGINAL_WIDTH_HEIGHT, (urlWidth > 0 ? urlWidth : 0) + ","
-                + (urlHeight > 0 ? urlHeight : 0));
-        map.put(ImageLoaderUtil.WIDTH_HEIGHT, showWidth + "," + showHeight);
-        ImageLoaderUtil.loadingImg(itemView.getContext(), imageView, map, null);
+//        if (itemView == null) {
+//            return this;
+//        }
+//        ImageView imageView = retrieveView(id);
+//        if (null == imageView) {
+//            return this;
+//        }
+//        if (0 == default_pic) {
+//            default_pic = ImageLoaderUtil.loading_400;
+//        }
+//        if (TextUtils.isEmpty(url) || MyUtil.isActivityRun(itemView.getContext())) {
+//            imageView.setImageResource(default_pic);
+//            return this;
+//        }
+//        HashMap<String, Object> map = new HashMap<String, Object>();
+//        map.put(ImageLoaderUtil.IMAGE_URL, url);
+//        map.put(ImageLoaderUtil.PLEASE_HOLDER, default_pic);
+//        map.put(ImageLoaderUtil.ORIGINAL_WIDTH_HEIGHT, (urlWidth > 0 ? urlWidth : 0) + ","
+//                + (urlHeight > 0 ? urlHeight : 0));
+//        map.put(ImageLoaderUtil.WIDTH_HEIGHT, showWidth + "," + showHeight);
+//        ImageLoaderUtil.loadingImg(itemView.getContext(), imageView, map, null);
         return this;
     }
 
@@ -160,7 +157,7 @@ public class RVBaseViewHolder extends RecyclerView.ViewHolder {
     public RVBaseViewHolder setImageResource(int id, int resource) {
         ImageView imageView = retrieveView(id);
         if (null != imageView && null != itemView) {
-            ThemeUtil.setImageResource(BaseApplication.getInstance(), imageView, resource);
+            imageView.setImageResource(resource);
         }
         return this;
     }
@@ -174,7 +171,7 @@ public class RVBaseViewHolder extends RecyclerView.ViewHolder {
      */
     public RVBaseViewHolder setVisibility(int id, int visiable) {
         View view = retrieveView(id);
-        Util.setVisibility(view, visiable);
+        MyUtil.setVisibility(view, visiable);
         return this;
     }
 
@@ -194,7 +191,7 @@ public class RVBaseViewHolder extends RecyclerView.ViewHolder {
      */
     public RVBaseViewHolder setVisibility(int id, boolean show) {
         View view = retrieveView(id);
-        Util.setVisibility(view, show ? View.VISIBLE : View.GONE);
+        MyUtil.setVisibility(view, show ? View.VISIBLE : View.GONE);
         return this;
     }
 
@@ -230,7 +227,7 @@ public class RVBaseViewHolder extends RecyclerView.ViewHolder {
      * @param onClickEffectiveListener
      * @return
      */
-    public RVBaseViewHolder setOnClickListener(int id, OnClickEffectiveListener onClickEffectiveListener) {
+    public RVBaseViewHolder setOnClickListener(int id, View.OnClickListener onClickEffectiveListener) {
         View view = retrieveView(id);
         if (null != view) {
             view.setOnClickListener(onClickEffectiveListener);
