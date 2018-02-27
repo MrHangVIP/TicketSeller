@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LibraryBaiduMap</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="wrong_location_lat">坐标获取失败</string>
+    <string name="route_search_empty">抱歉，未找到结果</string>
+
+</resources>

@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+String moduleName = "CompBaiduMap"
+
+repositories {
+    flatDir {
+        dir 'libs'
+    }
+}
+android {
+
+    useLibrary 'org.apache.http.legacy'
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    //jniLibs指向libs文件目录
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+
+    }
+}
+//上传源码后可查看注释
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//artifacts {
+//    archives sourcesJar
+//}
+
+//设置上传参数
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        repository(url: rootProject.MavenHostComp) {
+//            authentication(userName: rootProject.MavenUserName,
+//                    password: rootProject.MavenPWD)
+//        }
+//        pom.groupId = rootProject.MavenGroupIdCompMXU
+//        pom.packaging = rootProject.MavenPacking
+//        pom.artifactId = moduleName
+//        pom.version = "${CompBaiduMap}"
+//    }
+//}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+}
