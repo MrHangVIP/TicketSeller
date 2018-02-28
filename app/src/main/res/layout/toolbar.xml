@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#5fff"
     app:layout_collapseMode="pin"
-    app:layout_scrollFlags="scroll|enterAlways"
-    android:id="@+id/appbar">
+    app:layout_scrollFlags="scroll|enterAlways">
     <!--app:theme="@style/AppTheme.AppBarOverlay"-->
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#235EAB"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        app:theme="@style/ToolbarTheme">
         <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
 
         <TextView

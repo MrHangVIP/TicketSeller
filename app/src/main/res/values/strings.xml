@@ -9,5 +9,27 @@
     <string name="failure_net_tip">网络状态待提升，</string>
     <string name="failure_net_tip2">数据加载失败，</string>
     <string name="failure_net_retry">点此重试</string>
+    <!--登录注册开始-->
+    <string name="login4_hint_phone_number">手机号</string>
+    <string name="login4_hint_password">密码</string>
+    <string name="login4_button_login">登录</string>
+    <string name="login4_button_register">注册</string>
+    <string name="login4_forget_pass">忘记密码</string>
+    <string name="login4_register">快速注册</string>
+    <string name="login4_regist_notice">输入您的手机号码</string>
+    <string name="login4_regist_code_notice">您将收到短信来验证身份</string>
+    <string name="login4_regist_code_send">发送验证码</string>
+    <string name="login4_regist_next_notice">请输入发至\n%1$s的验证码</string>
+    <string name="login4_regist_next_hint_code">验证码</string>
+    <string name="login4_regist_next_hint_pass1">请设置密码</string>
+    <string name="login4_regist_next_hint_pass2">请再次输入密码</string>
+    <string name="login4_regist_next_code">获取验证码</string>
+    <string name="login4_forget_pass_send_notice">手机号不存在</string>
+    <string name="login4_forget_pass_text">输入收到的验证码</string>
+    <string name="login4_forget_pass_dialog_text">密码修改成功</string>
+    <string name="login4_forget_pass_dialog_yes">知道了</string>
+
+    <string name="user_name_empty">用户名不能为空</string>
+    <string name="user_pwd_empty">密码不能为空</string>
 
 </resources>

@@ -7,13 +7,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.zy.ticketseller.util.MyUtil;
 
@@ -32,6 +32,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     private static LinkedList<BaseActivity> activityList = new LinkedList<BaseActivity>();
     /**
+     * 登录相关页面
+     */
+    protected static LinkedList<BaseActivity> login_activities = new LinkedList<BaseActivity>();
+    /**
      * 创建问卷相关页面管理
      */
     protected static LinkedList<BaseActivity> createActivityList = new LinkedList<BaseActivity>();
@@ -39,13 +43,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected Toolbar toolbar;
 
     private TextView toolbarTitle;
+    protected Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
         activityList.add(this);
-
+        bundle = getIntent().getExtras();
         setView();
 
         setToolbar();
@@ -126,6 +131,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         });
     }
 
+    public void toast(@StringRes int rid) {
+        String msg = mContext.getString(rid);
+        toast(msg);
+    }
+
     public void clearAll() {
         activityList.clear();
     }
@@ -157,7 +167,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     protected void jumpToNext(Class<?> mClass, Bundle bundle, @AnimRes int resId) {
         Intent intent = new Intent(this, mClass);
-        if (bundle != null){
+        if (bundle != null) {
             intent.putExtra("bundle", bundle);
         }
         startActivity(intent);
@@ -229,7 +239,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     /**
      * token失效
      */
-    public void tokenError(){
+    public void tokenError() {
 //        BaseApplication.getAPPInstance().setmUser(null);
 //        SpfUtil.clearAll();
 //        if(this instanceof MainTabActivity){
@@ -238,6 +248,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 //            goToNext(LoginActivity.class);
 //        }
     }
+
     @Override
     public void onClick(View v) {
 

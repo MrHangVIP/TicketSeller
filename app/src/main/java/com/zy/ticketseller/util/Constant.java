@@ -28,6 +28,10 @@ public class Constant {
 
     public static final int IMAGE_UPLOAD_OK = 0x1000;
     public static final int IMAGE_UPLOAD_FAIL = 0x1001;
+    /**
+     * 类型
+     */
+    public static final String OPRATION_TYPE = "opration_type";
 
     //-------本地sharedpreference的key开始----------
 
@@ -48,7 +52,7 @@ public class Constant {
     public static final String MacAddress = MyUtil.getMac();
     public static int WIDTH = 0;
     public static int HEIGHT = 0;
-    public static float Density=0;
+    public static float Density = 0;
 
     //获取屏幕的宽度
     public static int getScreenWidth(Context context) {
@@ -74,13 +78,13 @@ public class Constant {
 
     //获取屏幕的分辨率
     public static float getScreenDensity(Context context) {
-        if(Density==0){
+        if (Density == 0) {
             WindowManager manager = (WindowManager) context
                     .getSystemService(Context.WINDOW_SERVICE);
             Display display = manager.getDefaultDisplay();
             DisplayMetrics dm = new DisplayMetrics();
             display.getMetrics(dm);
-            Density=dm.density;
+            Density = dm.density;
         }
         return Density;
     }

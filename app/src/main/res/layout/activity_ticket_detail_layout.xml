@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/atdl_iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/img_app_bg" />
+
+    <include layout="@layout/toolbar" />
+
+    <com.zy.ticketseller.ui.widget.recyclerview.RecyclerViewLayout
+        android:id="@+id/atdl_rcy_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/atdl_ll_bottom_layout">
+
+    </com.zy.ticketseller.ui.widget.recyclerview.RecyclerViewLayout>
+
+    <LinearLayout
+        android:id="@+id/atdl_ll_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#000000"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/atdl_tv_star"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:drawableTop="@drawable/icon_star_nomal"
+            android:gravity="center"
+            android:text="想看" />
+
+        <TextView
+            android:id="@+id/atdl_tv_buy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/img_buy_bg"
+            android:gravity="center"
+            android:text="选座购买"
+            android:textColor="#E6E6E6"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
