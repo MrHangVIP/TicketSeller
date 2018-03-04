@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.util.Util;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -23,7 +22,6 @@ import com.zy.ticketseller.ui.adapter.TicketListAdapter;
 import com.zy.ticketseller.ui.widget.recyclerview.RecyclerViewLayout;
 import com.zy.ticketseller.ui.widget.recyclerview.listener.RecyclerDataLoadListener;
 import com.zy.ticketseller.ui.widget.recyclerview.listener.RecyclerListener;
-import com.zy.ticketseller.util.MyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,7 +180,7 @@ public class TicketListFragment extends BaseFragment implements SwipeRefreshLayo
                     xRefreshRecycleView.setPullLoadEnable(false);
                 }
             }
-        }, 2000);
+        }, 1000);
     }
 
     public class GlideImageLoader extends ImageLoader {

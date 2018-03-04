@@ -2,6 +2,9 @@ package com.zy.ticketseller;
 
 import android.app.Application;
 
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.hoge.android.library.baidumap.BaiduMapUtils;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -38,6 +41,7 @@ public class BaseApplication extends Application {
         SpfUtil.init(this);
         Config.DEBUG = true;
         UMShareAPI.get(this);
+        SDKInitializer.initialize(this);
     }
 
 //    public UserItem getmUser() {

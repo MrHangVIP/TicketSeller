@@ -1,6 +1,9 @@
 package com.zy.ticketseller.ui.activity;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -17,6 +20,7 @@ import com.zy.ticketseller.BaseActivity;
 import com.zy.ticketseller.R;
 import com.zy.ticketseller.util.Constant;
 import com.zy.ticketseller.util.MyUtil;
+import com.zy.ticketseller.util.ProgressDialogUtil;
 import com.zy.ticketseller.util.SpfUtil;
 
 /**
@@ -61,6 +65,8 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initData() {
         setTitle("登录");
+        toolbarTitle.setTextColor(Color.parseColor("#333333"));
+        toolbar.setBackgroundColor(Color.TRANSPARENT);
         toolbar.inflateMenu(R.menu.login_cancle_menu);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -71,6 +77,10 @@ public class LoginActivity extends BaseActivity {
         });
         last_login_name = SpfUtil.getString(Constant.LOGIN_USERPHONE, "");
         buttonColor = Color.parseColor("#DC3C38");
+    }
+
+    protected boolean showBackDrawable(){
+        return false;
     }
 
     @Override
@@ -193,11 +203,15 @@ public class LoginActivity extends BaseActivity {
     }
 
     protected void forgetPwdAction() {
-//        Go2Util.goTo(mContext, Go2Util.join(sign, "ForgetPassWordStyle4", null), null, null, null);
+        Bundle bundle=new Bundle();
+        bundle.putInt(Constant.OPRATION_TYPE,1);
+        jumpToNext(ForgetPassWordActivity.class,bundle);
     }
 
     void registerAction() {
-//        Go2Util.startDetailActivity(mContext, sign, "RegisterStyle4", null, null);
+        Bundle bundle=new Bundle();
+        bundle.putInt(Constant.OPRATION_TYPE,1);
+        jumpToNext(RegistActivity.class,bundle);
     }
 
     public void initLoginPlat(String t) {
@@ -279,5 +293,6 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         //登录操作
+        ProgressDialogUtil.showProgressDialog(mContext,false);
     }
 }

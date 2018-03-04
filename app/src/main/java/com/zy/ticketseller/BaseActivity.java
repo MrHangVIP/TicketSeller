@@ -42,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     protected Toolbar toolbar;
 
-    private TextView toolbarTitle;
+    protected TextView toolbarTitle;
     protected Bundle bundle;
 
     @Override
@@ -50,7 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         mContext = this;
         activityList.add(this);
-        bundle = getIntent().getExtras();
+        bundle =getIntent().getBundleExtra("bundle");
         setView();
 
         setToolbar();
@@ -71,10 +71,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     private void setToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        if (toolbar != null && toolbarTitle != null) {
+        if (toolbar != null && toolbarTitle != null && showBackDrawable()) {
             toolbar.setNavigationIcon(setBackIcon());
             toolbar.setNavigationOnClickListener(setBackClick());
         }
+    }
+
+    protected boolean showBackDrawable(){
+        return true;
     }
 
     /**
@@ -90,7 +94,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * @return 按钮图标
      */
     public Drawable setBackIcon() {
-        return getDrawableRes(R.drawable.back_toolbar);
+        return MyUtil.updateDrawableSize(
+                getDrawableRes(R.drawable.back_toolbar),
+                MyUtil.toDip(30),MyUtil.toDip(30));
     }
 
     /**

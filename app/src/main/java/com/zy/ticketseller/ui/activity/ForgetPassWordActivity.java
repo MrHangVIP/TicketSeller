@@ -4,14 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,8 +23,9 @@ import android.widget.TextView;
 import com.zy.ticketseller.BaseActivity;
 import com.zy.ticketseller.R;
 import com.zy.ticketseller.util.Constant;
+import com.zy.ticketseller.util.LoginUtil;
+import com.zy.ticketseller.util.StringUtils;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,7 +37,6 @@ import java.util.TimerTask;
 public class ForgetPassWordActivity extends BaseActivity {
     private static final String TAG = "ForgetPassWordActivity";
 
-    private final int RIGHT_MENU = 11;
     private int opration_type = 1;//发送验证码和注册2个页面
     private LinearLayout contentView;
     //注册输入手机号页面
@@ -51,9 +52,8 @@ public class ForgetPassWordActivity extends BaseActivity {
     private ImageView login4_rnl_iv_show;
     private EditText login4_rnl_et_password2;
     private Button login4_rnl_bt_register;
-
+    private LoginUtil loginUtil;
     private String mobileStr;
-    private ProgressDialog mDialog;
     private Timer timer;
     private int TIME;
     private int buttonColor;
@@ -77,14 +77,23 @@ public class ForgetPassWordActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        loginUtil=new LoginUtil();
+        setTitle(R.string.login4_forget_pass);
+        toolbarTitle.setTextColor(Color.parseColor("#333333"));
+        toolbar.setBackgroundColor(Color.TRANSPARENT);
+        toolbar.inflateMenu(R.menu.login_cancle_menu);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                goBack();
+                return true;
+            }
+        });
     }
 
-    @Override
-    protected void setListener() {
-
+    protected boolean showBackDrawable(){
+        return false;
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -95,7 +104,6 @@ public class ForgetPassWordActivity extends BaseActivity {
         }
         initView();
         setContentView(contentView);
-        setListener();
     }
 
     private void initView() {
@@ -167,44 +175,16 @@ public class ForgetPassWordActivity extends BaseActivity {
                 public void onClick(View v) {
                     if (login4_rscl_bt_send.isEnabled()) {//检测手机号是否合理,手机号是否绑定,跳转到注册
                         final String mobile = login4_rscl_et_userphone.getText().toString();
-                        if (!loginUtil.judgeMobile(mobile))
+                        if (!StringUtils.isMobile(mobile)){
+                            toast("您输入的手机号不正确");
                             return;
-                        loginUtil.getValidatePlat(mobile, new MobileLoginUtil.IMobileLogin() {
+                        }
+                        //检测是否注册，注册发送验证码。否则跳的注册页面
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constant.OPRATION_TYPE, 0);
+                        bundle.putString("phone_number", mobile);
+                        jumpToNext(ForgetPassWordActivity.class, bundle);
 
-                            @Override
-                            public void callBack(Object obj) {
-                                if (obj == null) {
-                                    // 未注册:提示手机号不正确
-                                    showToast(R.string.login4_forget_pass_send_notice, CustomToast.DEFAULT);
-                                    return;
-                                }
-                                List<BindPlatBean> list = (List<BindPlatBean>) obj;
-                                if (list == null || list.size() == 0) {
-                                    // 未注册:提示手机号不正确
-                                    showToast(R.string.login4_forget_pass_send_notice, CustomToast.DEFAULT);
-                                } else {
-                                    for (int i = 0, l = list.size(); i < l; i++) {
-                                        BindPlatBean platBean = list.get(i);
-                                        if ("shouji".equals(platBean.getType())) {
-                                            // 已注册:发送验证码
-                                            loginUtil.sendMobileCode(mobile, MobileLoginUtil.FORGET_BY_MOBILE,
-                                                    platBean, new MobileLoginUtil.IMobileLogin() {
-
-                                                        @Override
-                                                        public void callBack(Object obj) {//发送失败
-                                                            showToast(R.string.user_validate_code_send_fail, CustomToast.DEFAULT);
-                                                        }
-                                                    }, null);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putInt(MobileLoginUtil.OPRATION_TYPE, 0);
-                                            bundle.putString("phone_number", mobile);
-                                            bundle.putSerializable("bind_plat", platBean);
-                                            Go2Util.startDetailActivity(mContext, sign, "ForgetPassWordStyle4", null, bundle);
-                                        }
-                                    }
-                                }
-                            }
-                        });
                     }
                 }
             });
@@ -216,20 +196,11 @@ public class ForgetPassWordActivity extends BaseActivity {
                     if (!login4__rnl_tv_send_code.isEnabled()) {
                         return;
                     }
-                    loginUtil.sendMobileCode(mobileStr, MobileLoginUtil.FORGET_BY_MOBILE,
-                            bindPlatBean, new MobileLoginUtil.IMobileLogin() {
-
-                                @Override
-                                public void callBack(Object obj) {//发送失败
-                                    showToast(R.string.user_validate_code_send_fail, CustomToast.DEFAULT);
-                                    timer.cancel();
-                                    login4__rnl_tv_send_code.setEnabled(true);
-                                    login4__rnl_tv_send_code.setText(Util.getString(R.string.login4_regist_code_send));
-                                }
-                            }, null);
                     countDown();
                 }
             });
+
+
             login4_rnl_iv_show.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -246,14 +217,13 @@ public class ForgetPassWordActivity extends BaseActivity {
                     login4_rnl_iv_show.setTag(!ishow);
                 }
             });
-
             login4_rnl_bt_register.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (!login4_rnl_bt_register.isEnabled())
                         return;
                     if (!TextUtils.equals(login4_rnl_et_password1.getText(), login4_rnl_et_password2.getText())) {
-                        showToast(R.string.pwd_again, CustomToast.WARM);
+                        toast("两次密码不一致");
                         login4_rnl_et_password1.setText("");
                         login4_rnl_et_password2.setText("");
                         return;
@@ -306,11 +276,6 @@ public class ForgetPassWordActivity extends BaseActivity {
      * @param code
      */
     public void resetPassword(String password, String code) {
-//        if (mDialog == null) {
-//            mDialog = MMProgress.showProgressDlg(mContext, null, R.string.user_pwd_reseting, false, true, null);
-//        } else {
-//            mDialog.show();
-//        }
 //        HashMap<String, String> map = new HashMap<>();
 //        map.put("password", password);
 //        map.put("verifycode", code);
@@ -356,36 +321,6 @@ public class ForgetPassWordActivity extends BaseActivity {
 //        });
     }
 
-    private void dismissDialog() {
-        if (mDialog != null) {
-            mDialog.cancel();
-            mDialog.dismiss();
-        }
-    }
-
-    @Override
-    protected void initActionBar() {
-        super.initActionBar();
-        actionBar.setTitle(getResources().getString(R.string.login4_forget_pass));
-        TextView menuView = Util.getNewTextView(mContext);
-        menuView.setText(getResources().getString(R.string.user_cancel));
-        menuView.setGravity(Gravity.CENTER_VERTICAL);
-        menuView.setPadding(0, 0, Util.toDip(10), 0);
-        menuView.setTextColor(ConfigureUtils.getMultiColor(module_data, ModuleData.ButtonBgColor, "#DC3C38"));
-        actionBar.addMenu(RIGHT_MENU, menuView, false);
-        Util.setVisibility(actionBar.getBackView(), View.GONE);
-        actionBar.setDividerVisible(false);
-        actionBar.setBackgroundColor(Color.WHITE);
-    }
-
-    @Override
-    public void onMenuClick(int mid, View v) {
-        super.onMenuClick(mid, v);
-        if (mid == RIGHT_MENU) {
-            finish();
-        }
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -398,13 +333,12 @@ public class ForgetPassWordActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        loginUtil.destory();
+        login_activities.remove(this);
         if (timer != null) {
             timer.cancel();
         }
     }
 
-    @Override
     public void goBack() {
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

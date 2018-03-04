@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zy.ticketseller.BaseActivity;
 import com.zy.ticketseller.R;
+import com.zy.ticketseller.ui.activity.TicketDetailActivity;
 import com.zy.ticketseller.ui.widget.recyclerview.adapter.BaseSimpleRecycleAdapter;
 import com.zy.ticketseller.ui.widget.recyclerview.adapter.RVBaseViewHolder;
 
@@ -46,6 +48,12 @@ public class TicketListAdapter extends BaseSimpleRecycleAdapter<RVBaseViewHolder
 
     @Override
     public void onBindViewHolder(RVBaseViewHolder holder, int position, boolean isItem) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((BaseActivity)mContext).jumpToNext(TicketDetailActivity.class);
+            }
+        });
         super.onBindViewHolder(holder, position, isItem);
     }
 
