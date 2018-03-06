@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.DrawableRes;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -315,9 +316,12 @@ public final class MyUtil {
      * @param attr
      */
     public static void setCompoundDrawables(TextView view, int width,
-                                            int height, int attr) {
+                                            int height, int attr,@DrawableRes int res) {
         Drawable[] drawables = view.getCompoundDrawables();
         Drawable myImage = drawables[attr];
+        if(res!=0){
+            myImage=view.getResources().getDrawable(res);
+        }
         if (myImage == null) {
             return;
         }
