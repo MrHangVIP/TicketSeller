@@ -105,7 +105,7 @@ public class HomeFragment extends BaseFragment {
                     res=R.drawable.icon_arrow_down;
                     filterViewHideAnimator.start();
                 }
-                MyUtil.setCompoundDrawables(fhl_tv_time,MyUtil.toDip(18),MyUtil.toDip(18),2,res);
+                MyUtil.setCompoundDrawables(fhl_tv_time,MyUtil.toDip(9),MyUtil.toDip(9),2,res);
                 view.setTag(tag);
             }
         });
@@ -135,8 +135,9 @@ public class HomeFragment extends BaseFragment {
     //初始化动画
     private void initAnimator() {
         int durtime = 300;
-        int height=fhl_bg_filter.getMeasuredHeight();
-        ObjectAnimator translationYIn = ObjectAnimator.ofFloat(fhl_ll_time_filter, "translationY", -height, 0);
+        int height=MyUtil.toDip(160);
+        int start=MyUtil.toDip(80);
+        ObjectAnimator translationYIn = ObjectAnimator.ofFloat(fhl_ll_time_filter, "translationY", -height+start, 0);
         ObjectAnimator alphaIn = ObjectAnimator.ofFloat(fhl_bg_filter, "alpha", 0, 0.5f);
         filterViewShowAnimator = new AnimatorSet();
         filterViewShowAnimator.play(translationYIn).with(alphaIn);
