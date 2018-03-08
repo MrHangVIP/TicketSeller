@@ -137,7 +137,7 @@ public class HomeFragment extends BaseFragment {
         int durtime = 300;
         int height=MyUtil.toDip(160);
         int start=MyUtil.toDip(80);
-        ObjectAnimator translationYIn = ObjectAnimator.ofFloat(fhl_ll_time_filter, "translationY", -height+start, 0);
+        ObjectAnimator translationYIn = ObjectAnimator.ofFloat(fhl_ll_time_filter, "translationY", -height, 0);
         ObjectAnimator alphaIn = ObjectAnimator.ofFloat(fhl_bg_filter, "alpha", 0, 0.5f);
         filterViewShowAnimator = new AnimatorSet();
         filterViewShowAnimator.play(translationYIn).with(alphaIn);
