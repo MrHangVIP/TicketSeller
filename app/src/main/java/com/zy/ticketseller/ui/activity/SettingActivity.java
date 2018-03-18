@@ -19,6 +19,7 @@ public class SettingActivity extends BaseActivity {
     private LinearLayout asl_ll_clear_catch;
     private LinearLayout asl_ll_aboutus;
     private LinearLayout asl_ll_update;
+    private LinearLayout asl_ll_change_type;
 
 
     @Override
@@ -32,6 +33,7 @@ public class SettingActivity extends BaseActivity {
         asl_ll_clear_catch = (LinearLayout) findViewById(R.id.asl_ll_clear_catch);
         asl_ll_aboutus = (LinearLayout) findViewById(R.id.asl_ll_aboutus);
         asl_ll_update = (LinearLayout) findViewById(R.id.asl_ll_update);
+        asl_ll_change_type = (LinearLayout) findViewById(R.id.asl_ll_change_type);
         asl_tv_loginout = (TextView) findViewById(R.id.asl_tv_loginout);
     }
 
@@ -66,6 +68,15 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 toast("当前已经是最新版本！");
+            }
+        });
+
+        asl_ll_change_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SpfUtil.clearAll();
+                goToNext(TypeSelectActivity.class);
+                clearAllActivity();
             }
         });
 

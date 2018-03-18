@@ -2,126 +2,145 @@ package com.zy.ticketseller.bean;
 
 import java.io.Serializable;
 
-/**
- * Created by Songzhihang on 2018/2/25.
- * 票务实体
- */
-public class TicketItem implements Serializable{
-    private int ticketId;
-    private int bussinessId;
-    private int typeId;
-    private double price;
-    private String title;
-    private String biref;
-    private String indexpicUrl;
-    private String createTime;
-    private String address;
-    private String startTime;
-    private long startTimeStmp;
-    private String finishTime;
-    private long finishTimeStmp;
+public class TicketItem implements Serializable {
 
-    public int getTicketId() {
-        return ticketId;
-    }
+	private int ticketId;
 
-    public void setTicketId(int ticketId) {
-        this.ticketId = ticketId;
-    }
+	private int businessId;
 
-    public int getBussinessId() {
-        return bussinessId;
-    }
+	private int typeId;
 
-    public void setBussinessId(int bussinessId) {
-        this.bussinessId = bussinessId;
-    }
+	private String title;
 
-    public int getTypeId() {
-        return typeId;
-    }
+	private String biref;
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
-    }
+	private String address;
 
-    public double getPrice() {
-        return price;
-    }
+	private String indexpicurl;
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+	private String createTime;
 
-    public String getTitle() {
-        return title;
-    }
+	private String duration;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	private double price;
 
-    public String getBiref() {
-        return biref;
-    }
+	private String startTime;
 
-    public void setBiref(String biref) {
-        this.biref = biref;
-    }
+	private long startTimeStmp;
 
-    public String getIndexpicUrl() {
-        return indexpicUrl;
-    }
+	private String finishTime;
 
-    public void setIndexpicUrl(String indexpicUrl) {
-        this.indexpicUrl = indexpicUrl;
-    }
+	private long finishTimeStmp;
 
-    public String getCreateTime() {
-        return createTime;
-    }
+	public int getTicketId() {
+		return ticketId;
+	}
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
+	public void setTicketId(int ticketId) {
+		this.ticketId = ticketId;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public int getBusinessId() {
+		return businessId;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setBusinessId(int businessId) {
+		this.businessId = businessId;
+	}
 
-    public String getStartTime() {
-        return startTime;
-    }
+	public int getTypeId() {
+		return typeId;
+	}
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
 
-    public long getStartTimeStmp() {
-        return startTimeStmp;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setStartTimeStmp(long startTimeStmp) {
-        this.startTimeStmp = startTimeStmp;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getFinishTime() {
-        return finishTime;
-    }
+	public String getBiref() {
+		return biref;
+	}
 
-    public void setFinishTime(String finishTime) {
-        this.finishTime = finishTime;
-    }
+	public void setBiref(String biref) {
+		this.biref = biref;
+	}
 
-    public long getFinishTimeStmp() {
-        return finishTimeStmp;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setFinishTimeStmp(long finishTimeStmp) {
-        this.finishTimeStmp = finishTimeStmp;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getIndexpicurl() {
+		return indexpicurl;
+	}
+
+	public void setIndexpicurl(String indexpicurl) {
+		this.indexpicurl = indexpicurl;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public long getStartTimeStmp() {
+		return startTimeStmp;
+	}
+
+	public void setStartTimeStmp(long startTimeStmp) {
+		this.startTimeStmp = startTimeStmp;
+	}
+
+	public String getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(String finishTime) {
+		this.finishTime = finishTime;
+	}
+
+	public long getFinishTimeStmp() {
+		return finishTimeStmp;
+	}
+
+	public void setFinishTimeStmp(long finishTimeStmp) {
+		this.finishTimeStmp = finishTimeStmp;
+	}
 }

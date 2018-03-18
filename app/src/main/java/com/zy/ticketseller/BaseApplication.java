@@ -3,11 +3,11 @@ package com.zy.ticketseller;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.BaiduMap;
-import com.hoge.android.library.baidumap.BaiduMapUtils;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.zy.ticketseller.bean.BusinessItem;
+import com.zy.ticketseller.bean.UserItem;
 import com.zy.ticketseller.util.SpfUtil;
 
 
@@ -22,7 +22,9 @@ public class BaseApplication extends Application {
         return instance;
     }
 
-//    private UserItem mUser;
+    private UserItem mUser;
+
+    private BusinessItem businessUser;
 //
 //    private static List<EmojiItem> emojiItemList=new ArrayList<>();
 //
@@ -44,11 +46,19 @@ public class BaseApplication extends Application {
         SDKInitializer.initialize(this);
     }
 
-//    public UserItem getmUser() {
-//        return mUser;
-//    }
-//
-//    public void setmUser(UserItem mUser) {
-//        this.mUser = mUser;
-//    }
+    public UserItem getmUser() {
+        return mUser;
+    }
+
+    public void setmUser(UserItem mUser) {
+        this.mUser = mUser;
+    }
+
+    public BusinessItem getBusinessUser() {
+        return businessUser;
+    }
+
+    public void setBusinessUser(BusinessItem businessUser) {
+        this.businessUser = businessUser;
+    }
 }

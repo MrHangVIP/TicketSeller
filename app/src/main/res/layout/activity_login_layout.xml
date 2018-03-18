@@ -141,7 +141,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:src="@drawable/login4_img_login_notice" />
+            android:src="@drawable/login4_img_login_notice"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/login4_ll_ll_third_layout"

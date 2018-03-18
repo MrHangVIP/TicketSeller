@@ -9,18 +9,25 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.mapapi.map.MapView;
 import com.bumptech.glide.util.Util;
+import com.hoge.android.library.baidumap.BaiduMapUtils;
 import com.zy.ticketseller.BaseFragment;
 import com.zy.ticketseller.R;
 import com.zy.ticketseller.ui.adapter.MyCommonNavigatorAdapter;
+import com.zy.ticketseller.util.Constant;
 import com.zy.ticketseller.util.MyUtil;
+import com.zy.ticketseller.util.SpfUtil;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -36,6 +43,7 @@ import java.util.List;
 public class HomeFragment extends BaseFragment {
     private static final String TAG = "HomeFragment";
     private MagicIndicator magicIndicator;
+    private LinearLayout fhl_ll_state;
     private TextView fhl_tv_city;
     private TextView fhl_tv_time;
     private ViewPager fhl_viewpager;
@@ -51,6 +59,7 @@ public class HomeFragment extends BaseFragment {
     private RelativeLayout fhl_rl_month;
     private AnimatorSet filterViewHideAnimator;
     private AnimatorSet filterViewShowAnimator;
+    private BaiduMapUtils baiduMapUtils;
 
     @Override
     protected View getLayout(LayoutInflater inflater, ViewGroup container) {
@@ -60,10 +69,18 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         magicIndicator = (MagicIndicator) contentView.findViewById(R.id.fhl_magic_indicator);
+        fhl_ll_state = (LinearLayout) contentView.findViewById(R.id.fhl_ll_state);
         fhl_tv_city = (TextView) contentView.findViewById(R.id.fhl_tv_city);
         fhl_tv_time = (TextView) contentView.findViewById(R.id.fhl_tv_time);
         fhl_viewpager = (ViewPager) contentView.findViewById(R.id.fhl_viewpager);
+        MyUtil.setCompoundDrawables(fhl_tv_city, MyUtil.toDip(14), MyUtil.toDip(14), 2, R.drawable.icon_refresh);
+        if (SpfUtil.getInt(Constant.LOGIN_TYPE, 0) == Constant.TYPE_BISSINESS) {
+            fhl_ll_state.setVisibility(View.GONE);
+            return;
+        }
         initTimeFilterView();
+        baiduMapUtils = BaiduMapUtils.getInstance(new MapView(context));
+        getLocation();
     }
 
     @Override
@@ -96,17 +113,13 @@ public class HomeFragment extends BaseFragment {
         fhl_tv_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean tag=!(Boolean) view.getTag();
-                int res=R.drawable.icon_arrow_up;
-                if(tag){
-                    res=R.drawable.icon_arrow_up;
-                    filterViewShowAnimator.start();
-                }else{
-                    res=R.drawable.icon_arrow_down;
-                    filterViewHideAnimator.start();
-                }
-                MyUtil.setCompoundDrawables(fhl_tv_time,MyUtil.toDip(9),MyUtil.toDip(9),2,res);
-                view.setTag(tag);
+                viewAction(fhl_tv_time);
+            }
+        });
+        fhl_tv_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLocation();
             }
         });
     }
@@ -116,14 +129,49 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    private void initTimeFilterView(){
-        fhl_ll_time_filter=(FrameLayout)contentView.findViewById(R.id.fhl_ll_time_filter);
-        fhl_bg_filter=(View)contentView.findViewById(R.id.fhl_bg_filter);
-        fhl_rl_all=(RelativeLayout)contentView.findViewById(R.id.fhl_rl_all);
-        fhl_rl_today=(RelativeLayout)contentView.findViewById(R.id.fhl_rl_today);
-        fhl_rl_week=(RelativeLayout)contentView.findViewById(R.id.fhl_rl_week);
-        fhl_rl_month=(RelativeLayout)contentView.findViewById(R.id.fhl_rl_month);
+    private void getLocation() {
+        baiduMapUtils.getLocation(new BaiduMapUtils.LocationListener() {
+            @Override
+            public void getLocationSuccess(BDLocation location) {
+                String city = "重新定位";
+                if (location != null) {
+                    city = !TextUtils.isEmpty(location.getCity()) ? location.getCity() : city;
+                }
+                fhl_tv_city.setText(city);
+            }
+        });
+    }
+
+    private void viewAction(TextView view) {
+        Boolean tag = !(Boolean) view.getTag();
+        int res = R.drawable.icon_arrow_up;
+        if (tag) {
+            res = R.drawable.icon_arrow_up;
+            filterViewShowAnimator.start();
+            fhl_bg_filter.setVisibility(View.VISIBLE);
+        } else {
+            res = R.drawable.icon_arrow_down;
+            filterViewHideAnimator.start();
+            fhl_bg_filter.setVisibility(View.GONE);
+        }
+        MyUtil.setCompoundDrawables(view, MyUtil.toDip(9), MyUtil.toDip(9), 2, res);
+        view.setTag(tag);
+    }
+
+    private void initTimeFilterView() {
+        fhl_ll_time_filter = (FrameLayout) contentView.findViewById(R.id.fhl_ll_time_filter);
+        fhl_bg_filter = (View) contentView.findViewById(R.id.fhl_bg_filter);
+        fhl_rl_all = (RelativeLayout) contentView.findViewById(R.id.fhl_rl_all);
+        fhl_rl_today = (RelativeLayout) contentView.findViewById(R.id.fhl_rl_today);
+        fhl_rl_week = (RelativeLayout) contentView.findViewById(R.id.fhl_rl_week);
+        fhl_rl_month = (RelativeLayout) contentView.findViewById(R.id.fhl_rl_month);
         fhl_tv_time.setTag(false);
+        fhl_bg_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewAction(fhl_tv_time);
+            }
+        });
         fhl_bg_filter.post(new Runnable() {
             @Override
             public void run() {
@@ -135,8 +183,7 @@ public class HomeFragment extends BaseFragment {
     //初始化动画
     private void initAnimator() {
         int durtime = 300;
-        int height=MyUtil.toDip(160);
-        int start=MyUtil.toDip(80);
+        int height = MyUtil.toDip(160);
         ObjectAnimator translationYIn = ObjectAnimator.ofFloat(fhl_ll_time_filter, "translationY", -height, 0);
         ObjectAnimator alphaIn = ObjectAnimator.ofFloat(fhl_bg_filter, "alpha", 0, 0.5f);
         filterViewShowAnimator = new AnimatorSet();

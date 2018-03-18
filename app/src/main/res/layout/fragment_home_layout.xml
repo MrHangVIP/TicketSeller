@@ -24,6 +24,7 @@
             android:background="#E1E1E1" />
 
         <LinearLayout
+            android:id="@+id/fhl_ll_state"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical">
@@ -39,9 +40,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/icon_arrow_up"
+                    android:drawableRight="@drawable/icon_refresh"
                     android:gravity="center"
-                    android:text="当前城市"
+                    android:text="重新定位"
                     android:textColor="#333333"
                     android:textSize="12sp" />
 
@@ -89,6 +90,7 @@
         android:layout_below="@+id/fhl_ll_filter"
         android:layout_height="match_parent"
         android:alpha="0"
+        android:visibility="gone"
         android:background="#000"/>
 
     <LinearLayout
@@ -128,7 +130,7 @@
                         android:layout_height="15dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/icon_notice_select" />
+                        android:src="@drawable/icon_filter_select" />
 
 
                 </RelativeLayout>
@@ -157,7 +159,7 @@
                         android:layout_height="15dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/icon_notice_select" />
+                        android:src="@drawable/icon_filter_select" />
 
 
                 </RelativeLayout>
@@ -186,7 +188,7 @@
                         android:layout_height="15dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/icon_notice_select" />
+                        android:src="@drawable/icon_filter_select" />
 
 
                 </RelativeLayout>
@@ -215,7 +217,7 @@
                         android:layout_height="15dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/icon_notice_select" />
+                        android:src="@drawable/icon_filter_select" />
 
 
                 </RelativeLayout>

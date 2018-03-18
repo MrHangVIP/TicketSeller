@@ -22,6 +22,8 @@ import com.zy.ticketseller.ui.adapter.TicketListAdapter;
 import com.zy.ticketseller.ui.widget.recyclerview.RecyclerViewLayout;
 import com.zy.ticketseller.ui.widget.recyclerview.listener.RecyclerDataLoadListener;
 import com.zy.ticketseller.ui.widget.recyclerview.listener.RecyclerListener;
+import com.zy.ticketseller.util.Constant;
+import com.zy.ticketseller.util.SpfUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,9 @@ public class TicketListFragment extends BaseFragment implements SwipeRefreshLayo
         xRefreshRecycleView.showData(true);
         xRefreshRecycleView.showLoading();
         xRefreshRecycleView.onRefresh();
+        if (SpfUtil.getInt(Constant.LOGIN_TYPE, 0) == Constant.TYPE_BISSINESS) {
+            return;
+        }
         initHeadView();
 //        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.fcl_sr_swiperefresh);
 //        swipeRefreshLayout.setOnRefreshListener(this);
@@ -70,6 +75,14 @@ public class TicketListFragment extends BaseFragment implements SwipeRefreshLayo
     @Override
     protected void initData() {
         type = getArguments().getString("type");
+    }
+
+    private void initHeadView() {
+        fcl_banner = new Banner(context);
+        View headView = LayoutInflater.from(context).inflate(R.layout.banner_head_layout, null);
+        fcl_banner = (Banner) headView.findViewById(R.id.bhl_banner);
+//        fcl_banner.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MyUtil.toDip(100)));
+        xRefreshRecycleView.setHeaderView(headView);
         fcl_banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
         //设置图片加载器
         fcl_banner.setImageLoader(new GlideImageLoader());
@@ -90,14 +103,6 @@ public class TicketListFragment extends BaseFragment implements SwipeRefreshLayo
         fcl_banner.setIndicatorGravity(BannerConfig.CENTER);
         //banner设置方法全部调用完毕时最后调用
         fcl_banner.start();
-    }
-
-    private void initHeadView() {
-        fcl_banner = new Banner(context);
-        View headView = LayoutInflater.from(context).inflate(R.layout.banner_head_layout, null);
-        fcl_banner = (Banner) headView.findViewById(R.id.bhl_banner);
-//        fcl_banner.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MyUtil.toDip(100)));
-        xRefreshRecycleView.setHeaderView(headView);
     }
 
     @Override

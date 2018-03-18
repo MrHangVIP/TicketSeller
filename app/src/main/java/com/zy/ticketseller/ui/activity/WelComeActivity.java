@@ -31,7 +31,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @autor songzhihang
  * @time 2018/2/28  上午10:54
  **/
-public class WelComeActivity extends BaseActivity  implements EasyPermissions.PermissionCallbacks{
+public class WelComeActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
     private static final String TAG = "WelComeActivity";
     private WelcomeCircularProgress ad_jump_progress1;
     private RelativeLayout ad_jump_layout1;
@@ -66,6 +66,7 @@ public class WelComeActivity extends BaseActivity  implements EasyPermissions.Pe
         requestPermission(PermissionConstant.REQUEST_WEB, allNeedPermissions, mInitPermissionCallback);
 //        //==================================================================================
     }
+
     /**
      * 启动权限申请结果回调
      */
@@ -129,10 +130,25 @@ public class WelComeActivity extends BaseActivity  implements EasyPermissions.Pe
             mTimer = null;
         }
         SpfUtil.saveBoolean(Constant.IS_FIRST, true);
-        if (SpfUtil.getBoolean(Constant.IS_LOGIN, false)) {
-            goToNext(MainTabActivity.class);
-        } else {
-            goToNext(MainTabActivity.class);
+        //
+        if (SpfUtil.getInt(Constant.LOGIN_TYPE, 0) == Constant.TYPE_BISSINESS) {//商家
+            //检查是否登录
+            if (SpfUtil.getBoolean(Constant.IS_LOGIN, false)) {
+                goToNext(MainTabActivity.class);
+            } else {
+                goToNext(LoginActivity.class);
+            }
+        }
+        if (SpfUtil.getInt(Constant.LOGIN_TYPE, 0) == Constant.TYPE_USER) {//用户
+            //检查是否登录
+            if (SpfUtil.getBoolean(Constant.IS_LOGIN, false)) {
+                goToNext(MainTabActivity.class);
+            } else {
+                goToNext(MainTabActivity.class);
+            }
+        }
+        if (SpfUtil.getInt(Constant.LOGIN_TYPE, 0) == 0) {//选择类型页面
+            goToNext(TypeSelectActivity.class);
         }
     }
 
@@ -152,7 +168,7 @@ public class WelComeActivity extends BaseActivity  implements EasyPermissions.Pe
         }
     }
 
-        /**
+    /**
      * 授权回调
      *
      * @param requestCode

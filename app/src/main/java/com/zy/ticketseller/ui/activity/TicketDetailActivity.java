@@ -77,8 +77,8 @@ public class TicketDetailActivity extends BaseActivity implements RecyclerDataLo
         ltdh_ll_notice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(noticeDialog==null){
-                    noticeDialog=new NoticeDialog(TicketDetailActivity.this);
+                if (noticeDialog == null) {
+                    noticeDialog = new NoticeDialog(TicketDetailActivity.this);
                 }
                 noticeDialog.show();
             }
@@ -124,6 +124,12 @@ public class TicketDetailActivity extends BaseActivity implements RecyclerDataLo
             @Override
             public void onClick(View view) {
                 atdl_iv_star.setImageResource(R.drawable.icon_star_select);
+            }
+        });
+        atdl_tv_buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpToNext(BuyTicketsFirstActivity.class);
             }
         });
     }

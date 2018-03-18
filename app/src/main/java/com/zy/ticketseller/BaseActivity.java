@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -50,7 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         mContext = this;
         activityList.add(this);
-        bundle =getIntent().getBundleExtra("bundle");
+        bundle = getIntent().getBundleExtra("bundle");
         setView();
 
         setToolbar();
@@ -77,7 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    protected boolean showBackDrawable(){
+    protected boolean showBackDrawable() {
         return true;
     }
 
@@ -96,7 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public Drawable setBackIcon() {
         return MyUtil.updateDrawableSize(
                 getDrawableRes(R.drawable.back_toolbar),
-                MyUtil.toDip(30),MyUtil.toDip(30));
+                MyUtil.toDip(30), MyUtil.toDip(30));
     }
 
     /**
@@ -273,5 +274,20 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         super.onDestroy();
         MyUtil.MyLogE(TAG, "onDestroy");
         activityList.remove(this);
+    }
+
+    protected void clearAllActivity() {
+        for (BaseActivity activity : activityList) {
+            if (activity != null) {
+                activity.finish();
+            }
+        }
+    }
+    protected void clearLogins() {
+        for (BaseActivity activity : login_activities) {
+            if (activity != null) {
+                activity.finish();
+            }
+        }
     }
 }

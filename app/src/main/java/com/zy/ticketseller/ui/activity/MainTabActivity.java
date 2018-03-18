@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.zy.ticketseller.BaseActivity;
 import com.zy.ticketseller.R;
+import com.zy.ticketseller.bussiness.PublishTicketsAvtity;
 import com.zy.ticketseller.ui.fragment.HomeFragment;
 import com.zy.ticketseller.ui.fragment.UserCenterFragment;
 import com.zy.ticketseller.util.Constant;
@@ -27,6 +28,8 @@ public class MainTabActivity extends BaseActivity {
     private LinearLayout aml_ll_right;
     private ImageView aml_iv_left;
     private ImageView aml_iv_right;
+    private View aml_iv_add;
+    private ImageView aml_iv_publish;
     private HomeFragment homeFragment;
     private UserCenterFragment userCenterFragment;
 
@@ -43,6 +46,12 @@ public class MainTabActivity extends BaseActivity {
         aml_ll_right = (LinearLayout) findViewById(R.id.aml_ll_right);
         aml_iv_left = (ImageView) findViewById(R.id.aml_iv_left);
         aml_iv_right = (ImageView) findViewById(R.id.aml_iv_right);
+        aml_iv_add = (View) findViewById(R.id.aml_iv_add);
+        aml_iv_publish = (ImageView) findViewById(R.id.aml_iv_publish);
+        if (SpfUtil.getInt(Constant.LOGIN_TYPE, 1) == Constant.TYPE_BISSINESS) {
+            aml_iv_add.setVisibility(View.VISIBLE);
+            aml_iv_publish.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -57,6 +66,12 @@ public class MainTabActivity extends BaseActivity {
     protected void setListener() {
         aml_ll_right.setOnClickListener(this);
         aml_ll_left.setOnClickListener(this);
+        aml_iv_publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpToNext(PublishTicketsAvtity.class);
+            }
+        });
     }
 
     @Override

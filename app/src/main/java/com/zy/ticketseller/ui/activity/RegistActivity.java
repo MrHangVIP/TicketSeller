@@ -283,7 +283,7 @@ public class RegistActivity extends BaseActivity {
 //                    dismissDialog();
 //                    if (ValidateHelper.isHogeValidData(mActivity, t)) {
 //                        mSharedPreferenceService.put(LoginConstant.LAST_LOGIN_NAME, name);
-//                        UserBean bean = JsonUtil.getSettingList(t).get(0);
+//                        UserItem bean = JsonUtil.getSettingList(t).get(0);
 //                        Util.saveUserInfo(bean);
 //                        Variable.IS_EXIST_PASSWORD = "1";
 //                        if (LoginUtil.getInstance(mContext).needCallback()) {

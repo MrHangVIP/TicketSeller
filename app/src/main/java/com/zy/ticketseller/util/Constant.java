@@ -8,10 +8,11 @@ import android.view.WindowManager;
 
 public class Constant {
 
-    public static final String DEFAULT_URL = "http://192.168.0.106:8080/JYZBiShe";
+    public static final String DEFAULT_URL = "http://192.168.0.106:8080/ZYBishe";
 
     public static final String IMAGE_URL = "/image/";
 
+    public static final String LOGIN_BuSINESS_URL = "/GetBusinessInfo";
     public static final String REGIST_URL = "/RegistUser";
     public static final String LOGIN_URL = "/LoginUser";
     public static final String GET_USER_URL = "/GetUserInfo";
@@ -42,6 +43,10 @@ public class Constant {
     public static final String LOGIN_USERPHONE = "login_userphone";
 
     public static final String TOKEN = "token";
+
+    public static final String LOGIN_TYPE = "login_type";
+    public static final int TYPE_USER = 0x100;
+    public static final int TYPE_BISSINESS = 0x101;
 
     //-------本地sharedpreference的key结束----------
 
@@ -96,7 +101,7 @@ public class Constant {
         /***
          * 保存到本地的目录
          */
-        public static final String SAVE_DIRECTORY = "/AIYAMAYA";
+        public static final String SAVE_DIRECTORY = "/TicketSeller";
         /***
          * 保存到本地图片的名字
          */

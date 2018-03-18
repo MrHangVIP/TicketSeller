@@ -12,6 +12,8 @@ import com.zy.ticketseller.R;
 import com.zy.ticketseller.ui.activity.TicketDetailActivity;
 import com.zy.ticketseller.ui.widget.recyclerview.adapter.BaseSimpleRecycleAdapter;
 import com.zy.ticketseller.ui.widget.recyclerview.adapter.RVBaseViewHolder;
+import com.zy.ticketseller.util.Constant;
+import com.zy.ticketseller.util.SpfUtil;
 
 import java.util.ArrayList;
 
@@ -51,7 +53,10 @@ public class TicketListAdapter extends BaseSimpleRecycleAdapter<RVBaseViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((BaseActivity)mContext).jumpToNext(TicketDetailActivity.class);
+                if (SpfUtil.getInt(Constant.LOGIN_TYPE, 0) == Constant.TYPE_BISSINESS) {
+                    return;
+                }
+                ((BaseActivity) mContext).jumpToNext(TicketDetailActivity.class);
             }
         });
         super.onBindViewHolder(holder, position, isItem);

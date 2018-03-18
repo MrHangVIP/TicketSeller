@@ -1,8 +1,6 @@
 package com.zy.ticketseller.ui.activity;
 
-import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -16,12 +14,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zy.ticketseller.BaseActivity;
+import com.zy.ticketseller.BaseApplication;
 import com.zy.ticketseller.R;
+import com.zy.ticketseller.api.OkHttpHelp;
+import com.zy.ticketseller.bean.BusinessItem;
+import com.zy.ticketseller.bean.ResultItem;
+import com.zy.ticketseller.bean.UserItem;
+import com.zy.ticketseller.listener.ResponseListener;
 import com.zy.ticketseller.util.Constant;
 import com.zy.ticketseller.util.MyUtil;
 import com.zy.ticketseller.util.ProgressDialogUtil;
 import com.zy.ticketseller.util.SpfUtil;
+import com.zy.ticketseller.util.StringUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @discription 登录
@@ -41,6 +53,7 @@ public class LoginActivity extends BaseActivity {
     private LinearLayout login4_ll_ll_third_layout;
     private int buttonColor;
     private String last_login_name;
+    private int type;
 
     @Override
     protected void setView() {
@@ -64,6 +77,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        type = SpfUtil.getInt(Constant.LOGIN_TYPE, 0);
         setTitle("登录");
         toolbarTitle.setTextColor(Color.parseColor("#333333"));
         toolbar.setBackgroundColor(Color.TRANSPARENT);
@@ -71,15 +85,24 @@ public class LoginActivity extends BaseActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                finish();
+                if (type == Constant.TYPE_BISSINESS) {
+                    goToNext(TypeSelectActivity.class);
+                } else {
+                    finish();
+                }
                 return true;
             }
         });
         last_login_name = SpfUtil.getString(Constant.LOGIN_USERPHONE, "");
         buttonColor = Color.parseColor("#DC3C38");
+        if (type == Constant.TYPE_BISSINESS) {
+            login4_ll_et_userphone.setHint("会员号");
+            login4_ll_tv_forget_pass.setVisibility(View.GONE);
+            login4_ll_tv_register.setVisibility(View.GONE);
+        }
     }
 
-    protected boolean showBackDrawable(){
+    protected boolean showBackDrawable() {
         return false;
     }
 
@@ -203,96 +226,124 @@ public class LoginActivity extends BaseActivity {
     }
 
     protected void forgetPwdAction() {
-        Bundle bundle=new Bundle();
-        bundle.putInt(Constant.OPRATION_TYPE,1);
-        jumpToNext(ForgetPassWordActivity.class,bundle);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.OPRATION_TYPE, 1);
+        jumpToNext(ForgetPassWordActivity.class, bundle);
     }
 
     void registerAction() {
-        Bundle bundle=new Bundle();
-        bundle.putInt(Constant.OPRATION_TYPE,1);
-        jumpToNext(RegistActivity.class,bundle);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.OPRATION_TYPE, 1);
+        jumpToNext(RegistActivity.class, bundle);
     }
-
-    public void initLoginPlat(String t) {
-//        if (TextUtils.isEmpty(t)) {
-//            login4_ll_ll_third_layout.setVisibility(View.GONE);
-//            return;
-//        }
-//        try {
-//            ArrayList<UserBean> list1 = JsonUtil.getSettingList(t);
-//            if (list1 != null) {
-//                ArrayList<UserBean> list = new ArrayList<UserBean>();
-//                for (int i = 0, l = list1.size(); i < l; i++) {
-//                    String mark = list1.get(i).getMark();
-//                    if ("sina".equals(mark) || "qq".equals(mark) || "weixin".equals(mark) || "shouji".equals(mark)) {
-//                        list.add(list1.get(i));
-//                    }
-//                }
-//                intiThirdPlat(list);
-//            } else {
-//                login4_ll_ll_third_layout.setVisibility(View.GONE);
-//            }
-//            if (t.contains("config")) {
-//                ArrayList<UserConfigBean> configBeans = LoginJsonUtil.getSettingConfigList(t);
-//                handlerPlatConfig(configBeans);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            login4_ll_ll_third_layout.setVisibility(View.GONE);
-//        }
-    }
-
-    //第三方平台初始化
-//    private void intiThirdPlat(final ArrayList<UserBean> list) {
-//        if (list.size() == 0) {
-//            login4_ll_ll_third_layout.setVisibility(View.GONE);
-//            return;
-//        }
-//        login4_ll_ll_third_layout.setVisibility(View.VISIBLE);
-//        login4_ll_ll_third_layout.removeAllViews();
-//        for (int i = 0; i < list.size(); i++) {
-//            final UserBean bean = list.get(i);
-//            ImageView imageView = new ImageView(mContext);
-//            if (TextUtils.equals("qq", list.get(i).getMark())) {
-//                imageView.setImageResource(R.drawable.login4_icon_qq);
-//                imageView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        loginOfQQ(bean);
-//                    }
-//                });
-//            }
-//            if (TextUtils.equals("weixin", list.get(i).getMark())) {
-//                imageView.setImageResource(R.drawable.login4_icon_wx);
-//                imageView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        loginOfWeixin(bean);
-//                    }
-//                });
-//            }
-//            if (TextUtils.equals("sina", list.get(i).getMark())) {
-//                imageView.setImageResource(R.drawable.login4_icon_wb);
-//                imageView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        loginOfSina(bean);
-//                    }
-//                });
-//            }
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(Util.toDip(50), Util.toDip(50));
-//            params.leftMargin = (Variable.WIDTH - Util.toDip(106) - Util.toDip(50) * list.size()) / (list.size() + 1);
-//            login4_ll_ll_third_layout.addView(imageView, params);
-//        }
-//    }
 
     public void loginAction(String name, String pwd) {
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(pwd)) {
-            toast(R.string.user_name_empty);
-            return;
+        if (type == Constant.TYPE_BISSINESS) {
+            businessLogin(name, pwd);
+        } else {
+            if (!StringUtils.isMobile(name)) {
+                toast("请输入正确的手机号");
+                loginFail();
+            }
+            if (pwd.length() < 8) {
+                toast("密码长度不能低于8位");
+                loginFail();
+                return;
+            }
+            userLogin(name, pwd);
         }
+    }
+
+    private void businessLogin(String username, String userpass) {
+        Map<String, String> params = new HashMap<>();
+        params.put("userPhone", username);
+        params.put("userPass", userpass);
+        params.put("MAC", Constant.MacAddress);
+        OkHttpHelp<ResultItem> httpHelp = OkHttpHelp.getInstance();
         //登录操作
-        ProgressDialogUtil.showProgressDialog(mContext,false);
+        ProgressDialogUtil.showProgressDialog(mContext, false);
+        httpHelp.httpRequest("post", Constant.LOGIN_URL, params, new ResponseListener<ResultItem>() {
+            @Override
+            public void onSuccess(ResultItem object) {
+                ProgressDialogUtil.dismissProgressdialog();
+                if (!object.getResult().equals("fail")) {
+                    toast("登录成功！");
+                    SpfUtil.saveString(Constant.TOKEN, object.getResult());
+                    JSONObject userJson = null;
+                    try {
+                        userJson = new JSONObject(object.getData());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    BusinessItem userItem = (new Gson()).fromJson(userJson.toString(), BusinessItem.class);
+                    BaseApplication.getAPPInstance().setBusinessUser(userItem);
+                    SpfUtil.saveBoolean(Constant.IS_LOGIN, true);
+                    SpfUtil.saveString(Constant.LOGIN_USERPHONE, userItem.getUserPhone());
+                    goToNext(MainTabActivity.class);
+                } else {
+                    toast("用户名或密码错误");
+                    loginFail();
+                }
+            }
+
+            @Override
+            public void onFailed(String message) {
+                ProgressDialogUtil.dismissProgressdialog();
+            }
+
+            @Override
+            public Class<ResultItem> getEntityClass() {
+                return ResultItem.class;
+            }
+        });
+    }
+
+    private void userLogin(String userPhone, String userPass) {
+        Map<String, String> params = new HashMap<>();
+        params.put("userPhone", userPhone);
+        params.put("userPass", userPass);
+        params.put("MAC", Constant.MacAddress);
+        OkHttpHelp<ResultItem> httpHelp = OkHttpHelp.getInstance();
+        ProgressDialogUtil.showProgressDialog(mContext, false);
+        httpHelp.httpRequest("post", Constant.LOGIN_URL, params, new ResponseListener<ResultItem>() {
+            @Override
+            public void onSuccess(ResultItem object) {
+                ProgressDialogUtil.dismissProgressdialog();
+                if (!object.getResult().equals("fail")) {
+                    toast("登录成功！");
+                    SpfUtil.saveString(Constant.TOKEN, object.getResult());
+                    JSONObject userJson = null;
+                    try {
+                        userJson = new JSONObject(object.getData());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    UserItem userItem = (new Gson()).fromJson(userJson.toString(), UserItem.class);
+                    BaseApplication.getAPPInstance().setmUser(userItem);
+                    SpfUtil.saveBoolean(Constant.IS_LOGIN, true);
+                    SpfUtil.saveString(Constant.LOGIN_USERPHONE, userItem.getUserPhone());
+                    clearLogins();
+                } else {
+                    toast("用户名或密码错误");
+                    loginFail();
+                }
+            }
+
+            @Override
+            public void onFailed(String message) {
+                ProgressDialogUtil.dismissProgressdialog();
+            }
+
+            @Override
+            public Class<ResultItem> getEntityClass() {
+                return ResultItem.class;
+            }
+        });
+    }
+
+    private void loginFail() {
+        login4_ll_et_userphone.setText("");
+        login4_ll_et_userphone.requestFocus();
+        login4_ll_et_password.setText("");
     }
 }
